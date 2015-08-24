@@ -537,15 +537,15 @@ namespace SIM {
 #endif
 			for (int p = 0; p < int(part->np); p++) {
 				if (part->type[p] != FLUID) continue;
-				tmp1[p] = part->func_mls_a_upwind(part->vel1, p, pos_tmp[p]);
-				tmp2[p] = part->func_mls_a_upwind(part->vel2, p, pos_tmp[p]);
+				tmp1[p] = part->func_mls_a_upwind(part->vel1, p, 0.5*(pos_tmp[p] + part->pos[p]));
+				tmp2[p] = part->func_mls_a_upwind(part->vel2, p, 0.5*(pos_tmp[p] + part->pos[p]));
 			}
 #if OMP
 #pragma omp parallel for
 #endif
 			for (int p = 0; p < int(part->np); p++) {
 				if (part->type[p] != FLUID) continue;
-				part->pos[p] = pos_tmp[p];
+				part->pos[p] = 0.5*(pos_tmp[p] + part->pos[p]);
 				part->vel1[p] = tmp1[p];
 				part->vel2[p] = tmp2[p];
 			}
