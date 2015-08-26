@@ -203,7 +203,6 @@ namespace SIM {
 			part->clean();
 			*part << "Geo.in";
 			part->init(para.k, para.beta);
-			insertRand();
 			part->buildCell();
 			part->b2b();
 			part->b2norm();
